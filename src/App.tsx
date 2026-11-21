@@ -92,7 +92,8 @@ export default function App() {
   const [replying, setReplying] = useState(false)
 
   // API Key & Settings Modal State
-  const DEFAULT_KEY = import.meta.env.VITE_GEMINI_API_KEY || ''
+  const DEFAULT_KEY = (import.meta as any).env?.VITE_GEMINI_API_KEY || '';
+
 
   const [showSettings, setShowSettings] = useState(false)
   const [apiKey, setApiKey] = useState(() => {
