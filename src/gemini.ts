@@ -50,12 +50,16 @@ export async function streamGemini(
     throw new Error('API_KEY_MISSING')
   }
 
-  const systemInstruction = emotionalMode ? SYSTEM_PROMPT_EMOTIONAL : SYSTEM_PROMPT_STANDARD
+  const isEnglishGreeting = /^(hi|hey|hello|yo|sup)[!?. ]*$/i.test(userPrompt.trim());
+const systemInstruction = isEnglishGreeting
+  ? 'You are Clou, a helpful and polite AI assistant. ALWAYS reply strictly in English only.'
+  : (emotionalMode ? SYSTEM_PROMPT_EMOTIONAL : SYSTEM_PROMPT_STANDARD);
+
 
   const contents: GeminiMessage[] = conversationHistory.map((item) => ({
     role: item.role === 'clou' ? 'model' : 'user',
     parts: [{ text: item.text }],
-  }))
+  (parts: [{ text: userPrompt }],)
 
   contents.push({
     role: 'user',
