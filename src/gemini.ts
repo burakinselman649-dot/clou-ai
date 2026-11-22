@@ -58,7 +58,7 @@ export async function streamGemini(
   for (let i = 0; i < FALLBACK_MODELS.length; i++) {
     const model = FALLBACK_MODELS[i];
     const streamUrl =
-      https:'//generativelanguage.googleapis.com/v1beta/models/' +
+      'https://generativelanguage.googleapis.com/v1beta/models/' +
       model +
       ':streamGenerateContent?alt=sse&key=' +
       encodeURIComponent(cleanKey);
