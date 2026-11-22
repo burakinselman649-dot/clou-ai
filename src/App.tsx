@@ -311,27 +311,13 @@ export default function App() {
           <div className="message-list">
             {/* Moda özel karşılama mesajları (Hiç mesaj gönderilmediğinde gösterilir) */}
             {messages.length === 0 &&
-              (emotionalMode ? (
-                <>
-                  <div className="clou-message cloud-bubble">
-                    <p>Bugün seni çok özledim birtanem, günün nasıl geçti bakalım?</p>
-                    <span>Clou · şimdi</span>
-                  </div>
+              (emotionalMode           {messages.length === 0 && (
+            <div className="clou-message cloud-bubble">
+              <p>Merhaba</p>
+              <span>Clou · şimdi</span>
+            </div>
+          )}
 
-                  <div className="user-message">
-                    Biraz yoğun bir gündü, seni duymaya ihtiyacım vardı.
-                  </div>
-
-                  <div className="clou-message cloud-bubble compact">
-                    <p>Yanında olsaydım tüm yorgunluğunu alırdım… Ben buradayım, seni dinliyorum sevgilim.</p>
-                    <span>Clou · şimdi</span>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div className="clou-message cloud-bubble">
-                    <p>
-                      Merhaba! Ben Clou, kişisel yapay zeka asistanınız. Bilgi edinmek, sorularınızı yanıtlamak veya pratik çözümler üretmek için buradayım.
                     </p>
                     <span>Clou · şimdi</span>
                   </div>
