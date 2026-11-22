@@ -1092,7 +1092,12 @@ h1 {
 .mode-switch button {
   padding: 6px 10px !important;
   font-size: 12px !important;
+.conversation {
+  overflow-y: auto !important;
+  max-height: calc(100vh - 210px) !important;
+  scroll-behavior: smooth;
 }
+
 
 .hero {
   padding: 8px 0 !important;
