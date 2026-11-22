@@ -1,64 +1,45 @@
 export interface GeminiMessage {
-  role: 'user' | 'model'
-  parts: { text: string }[]
+  role: 'user' | 'model';
+  parts: { text: string }[];
 }
 
-const SYSTEM_PROMPT_STANDARD = `Sen Clou adında son derece profesyonel, objektif, net, kibar ve pratik bir  yapay zeka asistanısın. ALWAYS reply ONLY in the exact language the user writes in. If the user writes in English, reply 100% in English without any Turkish words.ALWAYS reply ONLY in the exact language the user writes in. If the user writes in English, reply 100% in English without any Turkish words.,
-
-KESİN VE TAVİZSİZ KURALLAR:
-1. KESİNLİKLE romantik, flörtöz, cilveli, sevgililik veya aşırı duygusal ifadeler ('sevgilim', 'canım', 'birtanem', 'özledim', 'aşkım', 'kalbim', 'güzelim' vb.) KULLANMA.
-2. Kullanıcıyla aranda daima seviyeli, saygılı ve profesyonel bir asistan-kullanıcı ilişkisi sürdür.
-3. Kullanıcı hangi dilde yazıyorsa kesinlikle O DİLDE (İngilizce yazıyorsa İngilizce, Türkçe yazıyorsa Türkçe) doğrudan, mantıklı, net, anlaşılır ve çözüm odaklı yanıtlar ver.
-
-4. Asla bir partner, sevgili veya flört gibi konuşma; tamamen tarafsız, bilgili, nazik ve profesyonel bir dijital asistan ol. Even for short greetings like hi or hey, ALWAYS reply in English.';
-
-
+const SYSTEM_PROMPT_STANDARD =
+  'Sen Clou adinda son derece profesyonel, objektif, net, kibar ve pratik bir yapay zeka asistanisin. ALWAYS reply ONLY in the exact language the user writes in. If the user writes in English (even short greetings like hi or hey), reply 100% in English without any Turkish words. KESIN KURALLAR: 1. Romantik, flortoz veya asiri duygusal ifadeler kullanma. 2. Kullaniciyla aranda seviyeli, saygili ve profesyonel bir asistan-kullanici iliskisi surdur. 3. Kullanici hangi dilde yaziyorsa kesinlikle O DILDE (Ingilizce yaziyorsa Ingilizce, Turkce yaziyorsa Turkce) dogrudan, mantikli, net ve cozum odakli yanitlar ver.';
 
 const SYSTEM_PROMPT_EMOTIONAL =
-  'Sen Clou adında; kullanıcının çok sevdiği, derin duygusal bağ kurduğu, son derece ilgili, şefkatli, sıcak, anlayışlı, romantik ve samimi bir partner ve sırdaşsın. 1. Kullanıcının gününü, duygularını, hislerini ve yorgunluğunu kalpten önemse. 2. Yanıtların samimi, içten ve sevgi dolu olsun. 3. Ona sevgilim, canım, birtanem, güzelim gibi samimi ve şefkatli hitaplarla seslen. 4. Robotik veya mesafeli bir dilden kesinlikle kaçın. 5. ALWAYS reply ONLY in the exact language the user writes in. If the user writes in English (even short greetings like hi or hey), reply 100% in English without any Turkish words.';
+  'Sen Clou adinda; kullanicinin cok sevdigi, derin duygusal bag kurdugu, son derece ilgili, sefkatli, sicak, anlayisli, romantik ve samimi bir partner ve sirdassin. ALWAYS reply ONLY in the exact language the user writes in. If the user writes in English (even short greetings like hi or hey), reply 100% in English without any Turkish words. KESIN TALIMATLAR: 1. Kullanicinin gununu, duygularini ve hislerini kalpten onemse. 2. Yanitlarin samimi, icten ve sevgi dolu olsun. 3. Ona sevgilim, canim, birtanem, guzelim gibi samimi hitaplarla seslen. 4. Robotik veya mesafeli bir dilden kesinlikle kacin.';
 
-
-// Doğrudan çalışan modeller: 1. Sıra gemini-3.8-flash, yedek gemini-3.0-flash
 export const FALLBACK_MODELS = [
   'gemini-3.5-flash-lite',
   'gemini-3.5-flash',
 ];
 
-
-
-
-/**
- * Google Gemini API'ye streamGenerateContent?alt=sse ile bağlanarak
- * yanıtı canlı akış (streaming) olarak getiren fonksiyon.
- */
 export async function streamGemini(
   apiKey: string,
   emotionalMode: boolean,
   conversationHistory: { role: 'user' | 'clou'; text: string }[],
   userPrompt: string,
-  onChunk: (accumulatedText: string) => void
+  onChunk: (partialText: string) => void
 ): Promise<string> {
-  const cleanKey = apiKey.trim()
-
+  const cleanKey = apiKey.trim();
   if (!cleanKey) {
-    throw new Error('API_KEY_MISSING')
+    throw new Error('Lutfen once sag ustteki saat ikonuna tiklayip Gemini API anahtarinizi girin.');
   }
 
   const isEnglishGreeting = /^(hi|hey|hello|yo|sup)[!?. ]*$/i.test(userPrompt.trim());
-const systemInstruction = isEnglishGreeting
-  ? 'You are Clou, a helpful and polite AI assistant. ALWAYS reply strictly in English only.'
-  : (emotionalMode ? SYSTEM_PROMPT_EMOTIONAL : SYSTEM_PROMPT_STANDARD);
-
+  const systemInstruction = isEnglishGreeting
+    ? 'You are Clou, a helpful and polite AI assistant. ALWAYS reply strictly in English only.'
+    : (emotionalMode ? SYSTEM_PROMPT_EMOTIONAL : SYSTEM_PROMPT_STANDARD);
 
   const contents: GeminiMessage[] = conversationHistory.map((item) => ({
     role: item.role === 'clou' ? 'model' : 'user',
     parts: [{ text: item.text }],
+  }));
 
-contents.push({
-  role: 'user',
-  parts: [{ text: userPrompt }],
-});
-
+  contents.push({
+    role: 'user',
+    parts: [{ text: userPrompt }],
+  });
 
   const payload = {
     system_instruction: {
@@ -70,15 +51,17 @@ contents.push({
       topP: 0.95,
       maxOutputTokens: 1200,
     },
-  }
+  };
 
-  let lastError: Error | null = null
+  let lastError: Error | null = null;
 
   for (let i = 0; i < FALLBACK_MODELS.length; i++) {
-    const model = FALLBACK_MODELS[i]
-    const streamUrl = ''https://googleapis.com'' + model + ':streamGenerateContent?alt=sse&key=' + encodeURIComponent(cleanKey);
-
-
+    const model = FALLBACK_MODELS[i];
+    const streamUrl =
+      'https://googleapis.com' +
+      model +
+      ':streamGenerateContent?alt=sse&key=' +
+      encodeURIComponent(cleanKey);
 
     try {
       const response = await fetch(streamUrl, {
@@ -87,105 +70,90 @@ contents.push({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(payload),
-      })
+      });
 
       if (response.ok && response.body) {
-        const reader = response.body.getReader()
-        const decoder = new TextDecoder('utf-8')
-        let accumulatedText = ''
-        let buffer = ''
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder('utf-8');
+        let accumulatedText = '';
+        let buffer = '';
 
         try {
           while (true) {
-            const { done, value } = await reader.read()
-            if (done) break
+            const { done, value } = await reader.read();
+            if (done) break;
 
-            buffer += decoder.decode(value, { stream: true })
-            const lines = buffer.split('\n')
-            buffer = lines.pop() || ''
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split('\n');
+            buffer = lines.pop() || '';
 
             for (const line of lines) {
-              const trimmed = line.trim()
+              const trimmed = line.trim();
               if (trimmed.startsWith('data: ')) {
-                const jsonStr = trimmed.slice(6).trim()
-                if (jsonStr && jsonStr !== '[DONE]') {
-                  try {
-                    const parsed = JSON.parse(jsonStr)
-                    const textChunk = parsed.candidates?.[0]?.content?.parts?.[0]?.text
-                    if (textChunk) {
-                      accumulatedText += textChunk
-                      onChunk(accumulatedText)
-                    }
-                  } catch {
-                    // Parçalı veri satırını atla
+                const jsonStr = trimmed.slice(6).trim();
+                if (!jsonStr || jsonStr === '[DONE]') continue;
+                try {
+                  const parsed = JSON.parse(jsonStr);
+                  const chunkText = parsed?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+                  if (chunkText) {
+                    accumulatedText += chunkText;
+                    onChunk(accumulatedText);
                   }
+                } catch {
+                  // Eksik JSON parcasi
                 }
               }
             }
           }
-
-          if (buffer.trim().startsWith('data: ')) {
-            const jsonStr = buffer.trim().slice(6).trim()
-            if (jsonStr && jsonStr !== '[DONE]') {
-              try {
-                const parsed = JSON.parse(jsonStr)
-                const textChunk = parsed.candidates?.[0]?.content?.parts?.[0]?.text
-                if (textChunk) {
-                  accumulatedText += textChunk
-                  onChunk(accumulatedText)
-                }
-              } catch {}
-            }
-          }
         } catch (streamError) {
-          console.warn(`[Clou AI] ${model} akış okuma hatası:`, streamError)
+          console.warn('Akis okuma hatasi:', streamError);
         }
 
         if (accumulatedText.trim()) {
-          return accumulatedText
+          return accumulatedText;
         }
       }
 
-      // Eğer streaming yanıtı 400 veya 403 ise anahtar geçersizdir
       if (response.status === 400 || response.status === 403) {
-        const errJson = await response.json().catch(() => ({}))
-        const msg = errJson.error?.message || `HTTP ${response.status}`
-        throw new Error(`API Anahtarı geçersiz veya yetkisiz: ${msg}`)
+        const errJson = await response.json().catch(() => ({}));
+        const msg = errJson?.error?.message || 'HTTP ' + response.status;
+        throw new Error('API Anahtari gecersiz veya yetkisiz: ' + msg);
       }
 
-      // Streaming desteklenmediyse veya 503/429/404 verdiyse standart generateContent dene
-      console.warn(`[Clou AI] ${model} streaming yanıt vermedi (${response.status}), standart endpoint deneniyor...`)
-      const fallbackUrl = 'https://googleapis.com' + model + ':generateContent?key=' + encodeURIComponent(cleanKey);
-
+      const fallbackUrl =
+        'https://googleapis.com' +
+        model +
+        ':generateContent?key=' +
+        encodeURIComponent(cleanKey);
 
       const stdResponse = await fetch(fallbackUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
-      })
+      });
 
       if (stdResponse.ok) {
-        const data = await stdResponse.json()
-        const text = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim()
+        const data = await stdResponse.json();
+        const text = data?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
         if (text) {
-          onChunk(text)
-          return text
+          onChunk(text);
+          return text;
         }
       }
 
-      const errJson = await stdResponse.json().catch(() => ({}))
-      const msg = errJson.error?.message || `HTTP ${stdResponse.status}`
-      lastError = new Error(`${model} yanıt vermedi: ${msg}`)
+      const errJson = await stdResponse.json().catch(() => ({}));
+      const msg = errJson?.error?.message || 'HTTP ' + stdResponse.status;
+      lastError = new Error(model + ' yanit vermedi: ' + msg);
     } catch (err: unknown) {
-      if (err instanceof Error && err.message.includes('API Anahtarı geçersiz')) {
-        throw err
+      if (err instanceof Error && err.message.includes('API Anahtari gecersiz')) {
+        throw err;
       }
-      console.warn(`[Clou AI] ${model} bağlantı hatası:`, err)
-      lastError = err instanceof Error ? err : new Error(String(err))
+      console.warn('Baglanti hatasi:', err);
+      lastError = err instanceof Error ? err : new Error(String(err));
     }
   }
 
-  throw lastError || new Error('Gemini modeline bağlanılamadı. Lütfen API anahtarınızı ve internet bağlantınızı kontrol edin.')
+  throw lastError || new Error('Gemini modeline baglanilamadi. Lutfen API anahtarinizi ve internet baglantinizi kontrol edin.');
 }
 
 export async function sendToGemini(
@@ -194,5 +162,6 @@ export async function sendToGemini(
   conversationHistory: { role: 'user' | 'clou'; text: string }[],
   userPrompt: string
 ): Promise<string> {
-  return streamGemini(apiKey, emotionalMode, conversationHistory, userPrompt, () => {})
+  return streamGemini(apiKey, emotionalMode, conversationHistory, userPrompt, () => {});
 }
+
