@@ -1,0 +1,18 @@
+{
+  "name": "Clou AI",
+  "short_name": "Clou AI",
+  "description": "Seninle, şimdi — Hızlı ve sade yapay zeka asistanı",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#eef6fc",
+  "theme_color": "#5ea8e6",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
