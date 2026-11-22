@@ -59,7 +59,6 @@ const systemInstruction = isEnglishGreeting
   const contents: GeminiMessage[] = conversationHistory.map((item) => ({
     role: item.role === 'clou' ? 'model' : 'user',
     parts: [{ text: item.text }],
-  (parts: [{ text: userPrompt }],)
 
   contents.push({
     role: 'user',
