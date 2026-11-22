@@ -1,4 +1,4 @@
-# Clou AI - Seninle, Şimdi ☁️
+# Clou AI ☁️
 
 Clou AI, sakinleştirici bulut estetiğine sahip, pastel tonlarda mikro etkileşimler ve animasyonlar barındıran yapay zeka yol arkadaşıdır. Doğrudan **Google Gemini 3.8 Flash (`gemini-3.8-flash`)** API'sine bağlıdır.
 
