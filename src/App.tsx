@@ -258,16 +258,6 @@ export default function App() {
             </p>
           </div>
 
-          <button
-            className="icon-button"
-            type="button"
-            onClick={openSettings}
-            aria-label="Gemini API Ayarlarını Aç"
-            title="Ayarlar & Gemini API Anahtarı"
-          >
-            <Icon name="clock" size={20} />
-            {apiKey.trim() && <span className="key-indicator" title="API Anahtarı Tanımlı" />}
-          </button>
         </header>
 
         <div className="mode-switch" role="group" aria-label="Asistan modu">
