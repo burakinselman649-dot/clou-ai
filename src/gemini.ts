@@ -155,9 +155,8 @@ contents.push({
 
       // Streaming desteklenmediyse veya 503/429/404 verdiyse standart generateContent dene
       console.warn(`[Clou AI] ${model} streaming yanıt vermedi (${response.status}), standart endpoint deneniyor...`)
-      const fallbackUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(
-        cleanKey
-      )}`
+      const fallbackUrl = 'https://googleapis.com' + model + ':generateContent?key=' + encodeURIComponent(cleanKey);
+
 
       const stdResponse = await fetch(fallbackUrl, {
         method: 'POST',
