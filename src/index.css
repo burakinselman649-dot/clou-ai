@@ -1064,3 +1064,9 @@ h1 {
     transition-duration: 0.01ms !important;
   }
 }
+.conversation,
+.message-list {
+  overflow-y: auto !important;
+  max-height: calc(100vh - 220px) !important;
+  scroll-behavior: smooth;
+}
