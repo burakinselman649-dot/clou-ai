@@ -64,7 +64,11 @@ const systemInstruction = isEnglishGreeting
     role: 'user',
     parts: [{ text: /^(hi|hey|hello|yo|sup)[!?. ]*$/i.test(userPrompt.trim()) ? `${userPrompt} (Please reply in English)` : userPrompt }],
 
-  })
+ contents.push({
+  role: 'user',
+  parts: [{ text: userPrompt }],
+});
+ })
 
   const payload = {
     system_instruction: {
