@@ -22,9 +22,12 @@ KESİN TALİMATLAR:
 
 // Doğrudan çalışan modeller: 1. Sıra gemini-3.8-flash, yedek gemini-3.0-flash
 export const FALLBACK_MODELS = [
-  'gemini-3.8-flash',  // 1. Sıra: Birincil çalışan model
-  'gemini-2.5-flash',  // 2. Sıra: Kararlı resmi yedek
-]
+  'gemini-3.8-flash',
+  'gemini-3.0-flash',
+  'gemini-2.5-flash-lite',
+];
+
+
 
 /**
  * Google Gemini API'ye streamGenerateContent?alt=sse ile bağlanarak
