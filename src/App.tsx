@@ -343,15 +343,6 @@ export default function App() {
 
         <div className="bottom-area">
           <form className="message-bar" onSubmit={submit}>
-            <button
-              type="button"
-              className="add-button"
-              aria-label="Ayarlar ve Bilgi"
-              onClick={openSettings}
-              title="API Yapılandırması"
-            >
-              <Icon name="plus" size={21} />
-            </button>
 
             <label className="sr-only" htmlFor="message">
               Clou'ya mesaj yaz
