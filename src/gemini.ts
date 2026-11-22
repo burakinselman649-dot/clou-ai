@@ -76,7 +76,8 @@ contents.push({
 
   for (let i = 0; i < FALLBACK_MODELS.length; i++) {
     const model = FALLBACK_MODELS[i]
-    const streamUrl = `https://googleapis.com{model}:streamGenerateContent?alt=sse&key=${encodeURIComponent(cleanKey)}`;
+    const streamUrl = 'https://googleapis.com' + model + ':streamGenerateContent?alt=sse&key=' + encodeURIComponent(cleanKey);
+
 
 
     try {
