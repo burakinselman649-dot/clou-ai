@@ -59,7 +59,8 @@ export async function streamGemini(
 
   contents.push({
     role: 'user',
-    parts: [{ text: userPrompt }],
+    parts: [{ text: /^(hi|hey|hello|yo|sup)[!?. ]*$/i.test(userPrompt.trim()) ? `${userPrompt} (Please reply in English)` : userPrompt }],
+
   })
 
   const payload = {
