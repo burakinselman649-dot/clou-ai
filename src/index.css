@@ -1063,32 +1063,41 @@ h1 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-/* Kompakt Üst Bar & Geniş Mesaj Alanı */
-.app-header {
-  padding: 10px 16px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 8px !important;
+/* Kompakt Tek Satır Üst Bar & Geniş Mesaj Alanı */
+.app-shell {
+  max-width: 760px !important;
+  width: 95% !important;
+}
+
+.top-bar, header {
+  padding: 8px 16px !important;
+  min-height: auto !important;
+}
+
+.brand-name {
+  font-size: 16px !important;
+  margin: 0 !important;
+}
+
+.status {
+  font-size: 11px !important;
+  margin: 0 !important;
 }
 
 .mode-switch {
-  margin: 0 16px 8px 16px !important;
+  margin: 4px 16px 6px 16px !important;
   padding: 3px !important;
 }
 
 .mode-switch button {
-  padding: 6px 10px !important;
+  padding: 5px 10px !important;
   font-size: 12px !important;
 }
 
 .conversation {
   overflow-y: auto !important;
-  max-height: calc(100vh - 155px) !important;
-  padding-top: 8px !important;
-  scroll-behavior: smooth;
-}
-
+  max-height: calc(100vh - 145px) !important;
+  padding-top: 6px !important;
   scroll-behavior: smooth;
 }
 
