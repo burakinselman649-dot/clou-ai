@@ -60,15 +60,11 @@ const systemInstruction = isEnglishGreeting
     role: item.role === 'clou' ? 'model' : 'user',
     parts: [{ text: item.text }],
 
-  contents.push({
-    role: 'user',
-    parts: [{ text: /^(hi|hey|hello|yo|sup)[!?. ]*$/i.test(userPrompt.trim()) ? `${userPrompt} (Please reply in English)` : userPrompt }],
-
- contents.push({
+contents.push({
   role: 'user',
   parts: [{ text: userPrompt }],
 });
- })
+
 
   const payload = {
     system_instruction: {
