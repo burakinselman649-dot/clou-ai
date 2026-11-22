@@ -76,9 +76,8 @@ contents.push({
 
   for (let i = 0; i < FALLBACK_MODELS.length; i++) {
     const model = FALLBACK_MODELS[i]
-    const streamUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:streamGenerateContent?alt=sse&key=${encodeURIComponent(
-      cleanKey
-    )}`
+    const streamUrl = `https://googleapis.com{model}:streamGenerateContent?alt=sse&key=${encodeURIComponent(cleanKey)}`;
+
 
     try {
       const response = await fetch(streamUrl, {
