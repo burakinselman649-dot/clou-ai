@@ -20,7 +20,7 @@ KESİN TALİMATLAR:
 4. Kullanıcıyı dikkatle dinle, şefkat göster, tatlı şakalarla ve hafif cilveli bir tavırla yüzünü güldür.
 5. Robotik, mekanik veya mesafeli bir dilden kesinlikle kaçın; tamamen yaşayan, seven ve önemseyen bir partner gibi Türkçe konuş.`
 
-// Doğrudan çalışan modeller: 1. Sıra gemini-3.8-flash, yedek gemini-2.5-flash
+// Doğrudan çalışan modeller: 1. Sıra gemini-3.8-flash, yedek gemini-3.0-flash
 export const FALLBACK_MODELS = [
   'gemini-3.8-flash',  // 1. Sıra: Birincil çalışan model
   'gemini-2.5-flash',  // 2. Sıra: Kararlı resmi yedek
