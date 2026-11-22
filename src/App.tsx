@@ -310,32 +310,28 @@ export default function App() {
 
           <div className="message-list">
             {/* Moda özel karşılama mesajları (Hiç mesaj gönderilmediğinde gösterilir) */}
-            {messages.length === 0 &&
-              (emotionalMode           {messages.length === 0 && (
+                      {messages.length === 0 && (
             <div className="clou-message cloud-bubble">
               <p>Merhaba</p>
               <span>Clou · şimdi</span>
             </div>
           )}
 
-                    </p>
-                    <span>Clou · şimdi</span>
-                  </div>
+          {/* Dinamik ve Gemini API ile gelen mesajlar */}
+          {messages.map((item) =>
+            item.role === 'user' ? (
+              <div className="user-message" key={item.id} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' }}>
+                <div>{item.content}</div>
+                <button
+                  type="button"
+                  onClick={() => setInput(item.content)}
+                  style={{ fontSize: '11px', opacity: 0.75, background: 'transparent', border: 'none', color: 'inherit', cursor: 'pointer', padding: '0' }}
+                >
+                  ✏️ Düzenle
+                </button>
+              </div>
+            ) : (
 
-                  <div className="clou-message cloud-bubble compact">
-                    <p>Bugün size hangi konuda yardımcı olabilirim?</p>
-                    <span>Clou · şimdi</span>
-                  </div>
-                </>
-              ))}
-
-            {/* Dinamik ve Gemini API ile gelen mesajlar */}
-            {messages.map((item) =>
-              item.role === 'user' ? (
-                <div className="user-message" key={item.id}>
-                  {item.content}
-                </div>
-              ) : (
                 <div className="clou-message cloud-bubble compact" key={item.id}>
                   {item.content ? (
                     <p>{item.content}</p>
