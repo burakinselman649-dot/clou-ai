@@ -1063,41 +1063,47 @@ h1 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-/* Kompakt Tek Satır Üst Bar & Geniş Mesaj Alanı */
-.app-shell {
-  max-width: 760px !important;
+/* Geniş Ekran & Tek Satır Kompakt Üst Bar */
+.phone-frame {
+  max-width: 820px !important;
   width: 95% !important;
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-content: flex-start !important;
 }
 
-.top-bar, header {
-  padding: 8px 16px !important;
-  min-height: auto !important;
-}
-
-.brand-name {
-  font-size: 16px !important;
+.topbar {
+  width: 45% !important;
+  padding: 10px 16px !important;
   margin: 0 !important;
-}
-
-.status {
-  font-size: 11px !important;
-  margin: 0 !important;
+  border-bottom: none !important;
 }
 
 .mode-switch {
-  margin: 4px 16px 6px 16px !important;
-  padding: 3px !important;
+  width: 55% !important;
+  margin: 0 !important;
+  padding: 8px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
 }
 
 .mode-switch button {
-  padding: 5px 10px !important;
+  padding: 6px 10px !important;
   font-size: 12px !important;
 }
 
-.conversation {
-  overflow-y: auto !important;
-  max-height: calc(100vh - 145px) !important;
-  padding-top: 6px !important;
-  scroll-behavior: smooth;
+.hero {
+  padding: 8px 0 !important;
+  margin-bottom: 6px !important;
+  transform: scale(0.8);
 }
 
+.conversation {
+  width: 100% !important;
+  overflow-y: auto !important;
+  max-height: calc(100vh - 145px) !important;
+  padding-top: 4px !important;
+  scroll-behavior: smooth;
+}
