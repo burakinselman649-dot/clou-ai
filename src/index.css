@@ -1063,12 +1063,32 @@ h1 {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+/* Kompakt Üst Bar & Geniş Mesaj Alanı */
+.app-header {
+  padding: 10px 16px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
 }
-.conversation,
-.message-list {
+
+.mode-switch {
+  margin: 0 16px 8px 16px !important;
+  padding: 3px !important;
+}
+
+.mode-switch button {
+  padding: 6px 10px !important;
+  font-size: 12px !important;
+}
+
 .conversation {
   overflow-y: auto !important;
-  max-height: calc(100vh - 210px) !important;
+  max-height: calc(100vh - 155px) !important;
+  padding-top: 8px !important;
+  scroll-behavior: smooth;
+}
+
   scroll-behavior: smooth;
 }
 
